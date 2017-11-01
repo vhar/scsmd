@@ -1,10 +1,10 @@
 What is SCSMD?
 -------------
-This is "Single Coil Switch Machine Driver", based on Arduino and designed to control accessories equipped with a single coil and controlled by polarity reversal.
-The SCSMD have two modes of operation - "DCC" and "MANUAL".
-For switching between modes, used the push button.
-Controlling in "MANUAL" mode carried out by toggle switches or by means of digital outputs from Arduino, for example with DCC++ command station (https://github.com/DccPlusPlus).
-For configure DCC address, SCSMD has a "LEARNING MODE".
+This is "Single Coil Switch Machine Driver", based on Arduino and designed to control accessories equipped with a single coil and controlled by polarity reversal._
+The SCSMD have two modes of operation - "DCC" and "MANUAL"._
+For switching between modes, used the push button._
+Controlling in "MANUAL" mode carried out by toggle switches or by means of digital outputs from Arduino, for example with DCC++ command station (https://github.com/DccPlusPlus)._
+For configure DCC address, SCSMD has a "LEARNING MODE"._
 
 What do you need in addition?
 -------------------------
