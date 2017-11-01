@@ -43,11 +43,17 @@ To set the decoder address, the SCSMD must be in the DCC operating mode.
 * Press and hold SW1 push button more when 1,5 sec.
 * The controlling LED start single flashing. It means that SCSMD switched to Learning Mode.
 * After this, send any command from DCC command station to necessary accessory address. 
-* The controlling LED stops flashing. It means that SCSMD stored a new decoder address.
-NOTE: SCSM store the Decoder-Address, it's not the same as the Output-Address.<br />
-For example:<br />
-  if you send a command to Accessory address 5, SCSM store Decoder-Address 2, as well as if you send a command to Accessory address 6, 7 or 8.<br />
-  In this case, the output #1 will have an Output-Address 5, the output #2 will have an Output-Address 6, the output #3 will have an Output-Address 7 and the output #4 will have an Output-Address 8.<br />
-  Mode information about Decoder-Address and Output-Address see in NMRA Standards S-9.2.2, Chapters 350-365 on page 9. <br />
+* The controlling LED stops flashing. It means that SCSMD stored a new decoder address.<br />
+**_NOTE_**: SCSM store the Decoder-Address, it's not the same as the Output-Address.<br />
+```
+For example:
+  if you send a command to Accessory address 5, SCSM store Decoder-Address 2, 
+  as well as if you send a command to Accessory address 6, 7 or 8.
+  In this case, the output #1 will have an Output-Address 5, 
+  the output #2 will have an Output-Address 6, 
+  the output #3 will have an Output-Address 7 
+  and the output #4 will have an Output-Address 8.
+```
+More information about Decoder-Address and Output-Address see in NMRA Standards S-9.2.2, Chapters 350-365 on page 9. <br />
 If within 30 seconds after entering the "LEARNING MODE", the SCSMD does not receive a command to switch the accessory, it will exit the "LEARNING MODE", the controlling LED will stop blinking, and the decoder address will remain the same.<br />
 You can also exit from "LEARNING MODE" if, within 15 seconds after switching on "LEARNING MODE", press and hold again more than 1.5 seconds the SW1 button. The LED will also stop blinking, indicating that the SCSMD has exited the "LEARNING MODE".
