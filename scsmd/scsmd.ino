@@ -34,7 +34,7 @@
 #include <DCC_Decoder.h>
 Bounce points[4] = Bounce();
 Bounce pushbutton = Bounce();
-String CURRENTVERSION = "0.02b";
+String CURRENTVERSION = "0.03b";
 
 void setup() {
   Serial.begin(115200);
