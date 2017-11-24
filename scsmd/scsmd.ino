@@ -4,6 +4,9 @@
  * Copyright (c) 2017, Valerie Valley RR https://sites.google.com/site/valerievalleyrr/
  * 
  * Change log:
+ * 2017-11-24 remapping enable pin to PWM for future using
+ *            change control pin processing
+ *            extended turnout structure
  * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -32,18 +35,64 @@
 #include <Bounce2.h>
 #include <EEPROM.h>
 #include <DCC_Decoder.h>
-Bounce points[4] = Bounce();
 Bounce pushbutton = Bounce();
-String CURRENTVERSION = "0.03b";
+
+void BasicAccDecoderPacket_Handler(int address, boolean activate, byte data){
+  now = millis();
+  if (learningMode > 0) {
+    EEPROM.update(EEPROM_ADDRESS, address);
+    decoderAddress = address;
+    learningMode = ledFlag = 0;
+    digitalWrite(LEDCONTROL, decoderMode);      
+  } else {
+    if (address == decoderAddress) {
+      int pos = (data & 0x01) ? THROW : CLOSE;
+      int t = (data & 0x06) / 2;
+      if(!turnouts[t].motorRun){
+        turnout_switch(turnouts[t], pos);
+        turnouts[t].motorRun = now;
+        EEPROM.update(EPPROM_POSITION + t, pos);
+      }
+    }
+  }
+}
+
+void turnout_switch(Turnout t, int pos){
+  if(pos == THROW){
+    digitalWrite(t.red_pin, HIGH);
+    digitalWrite(t.black_pin, LOW);
+    digitalWrite(t.enable_pin, HIGH);
+  }
+  else if(pos == CLOSE){
+    digitalWrite(t.red_pin, LOW);
+    digitalWrite(t.black_pin, HIGH);
+    digitalWrite(t.enable_pin, HIGH);
+  }
+}
+
+bool control_update(Turnout t){
+  if(millis() - t.controlChange >= INTERVAL_MILLIS) {
+    bool currentState = control_read(t);
+    if(t.controlState != currentState) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool control_read(Turnout t){
+  bool currentState = analogRead(t.control_pin) > 254 ? THROW : CLOSE;
+  return currentState;
+}
 
 void setup() {
   Serial.begin(115200);
   Serial.println("Single Coil Switch Machine Driver version "+CURRENTVERSION);
-  boolean pos = CLOSE;
   pinMode(PUSHBUTTON, INPUT_PULLUP);
   pinMode(LEDCONTROL, OUTPUT);
   pushbutton.attach(PUSHBUTTON);
   pushbutton.interval(5);
+  bool currentState = CLOSE;
   if(EEPROM.read(EEPROM_MODE) > 1) {
     EEPROM.update(EEPROM_MODE, 1);
   }
@@ -72,9 +121,8 @@ void setup() {
     Serial.println("MANUAL");
   }
   for(int i=0; i<4; i++){
-    pinMode(turnouts[i].control_pin, INPUT_PULLUP);
-    points[i].attach(turnouts[i].control_pin);
-    points[i].interval(5);
+    pinMode(turnouts[i].control_pin, INPUT);
+    analogWrite(turnouts[i].control_pin, 255);
     pinMode(turnouts[i].enable_pin, OUTPUT);
     digitalWrite(turnouts[i].enable_pin, LOW);
     pinMode(turnouts[i].red_pin, OUTPUT);
@@ -83,12 +131,13 @@ void setup() {
       if(EEPROM.read(EPPROM_POSITION + i) > 1) {
         EEPROM.update(EPPROM_POSITION + i, CLOSE);
       }
-      pos = EEPROM.read(EPPROM_POSITION + i);
+      currentState = EEPROM.read(EPPROM_POSITION + i);
     }
     else {
-      pos = digitalRead(turnouts[i].control_pin);
+      currentState = control_read(turnouts[i]);
+      turnouts[i].controlState = currentState;
     }
-    turnout_switch(turnouts[i], pos);
+    turnout_switch(turnouts[i], currentState);
     turnouts[i].motorRun = 1;    
   }
   digitalWrite(LEDCONTROL, decoderMode);
@@ -104,8 +153,10 @@ void loop() {
     if(decoderMode){
       DCC.loop();
     }
-    else if(points[i].update()){
-      turnout_switch(turnouts[i], points[i].read());
+    else if(control_update(turnouts[i])){
+      bool currentState = turnouts[i].controlState = control_read(turnouts[i]);
+      turnouts[i].controlChange = now;
+      turnout_switch(turnouts[i], currentState);
       turnouts[i].motorRun = now;
     }
   }
@@ -143,26 +194,6 @@ void loop() {
     if(learningMode && now - learningMode > LEARNING_MODE_WAIT){
       learningMode = ledFlag = 0;
       digitalWrite(LEDCONTROL, decoderMode);      
-    }
-  }
-}
-
-void BasicAccDecoderPacket_Handler(int address, boolean activate, byte data) { 
-  now = millis();
-  if (learningMode > 0) {
-    EEPROM.update(EEPROM_ADDRESS, address);
-    decoderAddress = address;
-    learningMode = ledFlag = 0;
-    digitalWrite(LEDCONTROL, decoderMode);      
-  } else {
-    if (address == decoderAddress) {
-      int pos = (data & 0x01) ? THROW : CLOSE;
-      int t = (data & 0x06) / 2;
-      if(!turnouts[t].motorRun){
-        turnout_switch(turnouts[t], pos);
-        turnouts[t].motorRun = now;
-        EEPROM.update(EPPROM_POSITION + t, pos);
-      }
     }
   }
 }
