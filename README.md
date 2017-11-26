@@ -14,7 +14,16 @@ https://github.com/MynaBay/DCC_Decoder<br />
 
 How to configure
 ----------------
-You do not need to configure anything in this time.<br />
+You do not need to configure anything in this time. This functional be added in future.<br />
+For first time run, do reset procedure.<br />
+
+How to reset decoder to default values
+--------------------------------------
+For reset decoder:<br />
+* Press and hold "Reset" button on Arduino board.
+* Press and hold SW1 push button on PCB.
+* Release "Reset" button.
+* After the controlling LED twice flashing - release SW1 push button.<br />
 
 How to use
 ----------
@@ -27,18 +36,17 @@ Also, in the “DCC” operating mode, the turnout positions are stored in the E
 How to switch operating mode
 ----------------------------
 By default, the SCSMD operates in the DCC mode.<br />
-In order to switch the operating mode:<br />
-* Press and hold "Reset" button on Arduino board.
-* Press and hold SW1 push button on SCSMD board.
-* Release "Reset" button.
-* Release SW1 push button.<br />
-The controlling LED flashes twice if operating mode switch to "MANUAL" and the controlling LED remains off or thrice if operating mode switch to "DCC" and the controlling LED will burn.<br />
+In order to switch between the operating modes:<br />
+* Press and hold SW1 push button more when 1,5 sec.
+* The controlling LED start single flashing. It means that SCSMD switched to "LEARNING MODE".
+* Within 15 seconds after switching on "LEARNING MODE", press and hold again more than 1.5 seconds the SW1 button. The LED will also stop blinking, indicating that the SCSMD has exited from "LEARNING MODE".<br />
+The operating modes are switched in turn. If the mode was DCC, it will be switched to MANUAL and vice versa.<br />
 
 How to set DCC address
 ----------------------
-To set the decoder address, the SCSMD must be in the DCC operating mode.<br />
+To set the decoder address, the SCSMD must be in the "LEARNING MODE".<br />
 * Press and hold SW1 push button more when 1,5 sec.
-* The controlling LED start single flashing. It means that SCSMD switched to Learning Mode.
+* The controlling LED start single flashing. It means that SCSMD switched to "LEARNING MODE".
 * After this, send any command from DCC command station to necessary accessory address. 
 * The controlling LED stops flashing. It means that SCSMD stored a new decoder address.<br />
 **_NOTE_**: SCSMD store the Decoder-Address, it's not the same as the Output-Address.<br />
@@ -51,7 +59,11 @@ You can also exit from "LEARNING MODE" if, within 15 seconds after switching on 
 
 Change Log
 ----------
-2017-11-24 version 101<br />
+2017-11-24 version 1.0.1b<br />
  * mapping enable pin to PWM for future using
  * change control pin processing
- * extended turnout structure
+ * extended turnout structure<br />
+ 
+2017-11-26 version 1.0.2b<br />
+ * added procedure for resetting settings
+ * changed the procedure for switching between operating modes<br />
