@@ -53,7 +53,7 @@ To set the decoder address, the SCSMD must be in the "LEARNING MODE".<br />
 For example:<br />
   if you send a command to Accessory address 5, SCSM store Decoder-Address 2, as well as if you send a command to Accessory address 6, 7 or 8.<br />
   In this case, the output #1 will have an Output-Address 5, the output #2 will have an Output-Address 6, the output #3 will have an Output-Address 7 and the output #4 will have an Output-Address 8.<br />
-  Mode information about Decoder-Address and Output-Address see in NMRA Standards S-9.2.2, Chapters 350-365 on page 9. <br />
+  More information about Decoder-Address and Output-Address see in NMRA Standards S-9.2.2, Chapters 350-365 on page 9. <br />
 If within 30 seconds after entering the "LEARNING MODE", the SCSMD does not receive a command to switch the accessory, it will exit the "LEARNING MODE", the controlling LED will stop blinking, and the decoder address will remain the same.<br />
 You can also exit from "LEARNING MODE" if, within 15 seconds after switching on "LEARNING MODE", press and hold again more than 1.5 seconds the SW1 button. The LED will also stop blinking, indicating that the SCSMD has exited the "LEARNING MODE".<br />
 
@@ -67,3 +67,6 @@ Change Log
 2017-11-26 version 1.0.2b<br />
  * added procedure for resetting settings
  * changed the procedure for switching between operating modes<br />
+ 
+2017-12-05 version 1.0.2b<br />
+ * fixed bug when switching between operating modes<br />

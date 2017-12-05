@@ -9,7 +9,8 @@
  *            extended turnout structure
  * 2017-11-26 added procedure for resetting settings
  *            changed the procedure for switching between operating modes
- *            
+ * 2017-12-05 fixed bug when switching between operating modes
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
  * 
@@ -183,6 +184,10 @@ void loop() {
       learningMode = ledFlag = 0;
       digitalWrite(LEDCONTROL, LOW);
       EEPROM.update(EEPROM_DECODER_CONTROL_MODE, EEPROM.read(EEPROM_DECODER_CONTROL_MODE) ^ 255);
+      decoderMode = EEPROM.read(EEPROM_DECODER_CONTROL_MODE);
+      for(int i=0; i<4; i++){
+        turnouts[i].controlMode = bitRead(decoderMode, i);
+      }
     }
     else {
       learningMode = ledFlag = now;
