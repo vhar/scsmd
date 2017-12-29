@@ -15,8 +15,8 @@ https://github.com/MynaBay/DCC_Decoder<br />
 Configuration Variables (CV)
 ----------------------------
   * **514** - Output control and inverse mode<br />
-          The lower 4 bytes define the output control mode. 0 = DCC, 1 = MANUAL.<br />
-          The upper 4 bytes define the inverse output polarity. 0 = NORMAL, 1 = INVERSE.<br />
+          The lower 4 bits define the output control mode. 0 = DCC, 1 = MANUAL.<br />
+          The upper 4 bits define the inverse output polarity. 0 = NORMAL, 1 = INVERSE.<br />
           Default 0<br />
   * **515** - Output #1 pulse time. X*100ms.<br />
           Default 10 (1000ms)<br />
