@@ -1,6 +1,6 @@
 /*
    Single Coil Switch Machine driver
-   Software version 2.0.1b
+   Software version 2.0.2b
    Copyright (c) 2017, Valerie Valley RR https://sites.google.com/site/valerievalleyrr/
 
    Change log:
@@ -14,6 +14,7 @@
               СV setting is possible via serial port
               the operating mode can be set for each output separately
               the DCC address is set for each output separately
+   2021-12-04 added default decoder configuration variable
  
    Redistribution and use in source and binary forms, with or without modification,
    are permitted provided that the following conditions are met:
@@ -230,4 +231,3 @@ void loop() {
     digitalWrite(LEDCONTROL, LOW);
   }
 }
-

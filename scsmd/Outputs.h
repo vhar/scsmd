@@ -37,8 +37,7 @@
         // Output #4 - Accessory address 4        
 #define DECODER_PULSE_TIME 10 // Default output pulse time (x* 100ms)
 #define DECODER_PWM 0 //Default PWM value is 0, decoder outputs mode = PULSE
-
-//int decoderMode; // variable for operative storing current output control mode
+#define DECODER_CONFIGURATION 0 //Default output control and inverse mode
 
 /* 
  * Turnout structure
@@ -79,4 +78,3 @@ struct Outputs
 #ifndef sbi
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
-

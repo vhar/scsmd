@@ -9,7 +9,7 @@
 #ifndef scsmd_h
 #define scsmd_h
 
-#define CURRENTVERSION 201
+#define CURRENTVERSION 202
 #define kDCC_INTERRUPT 0 // Pin 2 used as DCC Interrupt
 #define PUSHBUTTON_HOLD_TIME 1500 // Push button hold time (in milliseconds) before switching mode.
 #define LEARNING_MODE_WAIT 15000 // The DCC address waiting time (in milliseconds) in the Learning Mode.
